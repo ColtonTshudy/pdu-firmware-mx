@@ -1,0 +1,372 @@
+ARM GAS  C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"bolt_sw_timer.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Src/bolt_sw_timer.c"
+  20              		.section	.text.SWTimer_construct,"ax",%progbits
+  21              		.align	1
+  22              		.global	SWTimer_construct
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	SWTimer_construct:
+  28              	.LVL0:
+  29              	.LFB132:
+   1:Src/bolt_sw_timer.c **** /*
+   2:Src/bolt_sw_timer.c ****  * bolt_sw_timer.c
+   3:Src/bolt_sw_timer.c ****  *
+   4:Src/bolt_sw_timer.c ****  *  Created on: 4/15/2022
+   5:Src/bolt_sw_timer.c ****  *      Author: Colton Tshudy
+   6:Src/bolt_sw_timer.c ****  */
+   7:Src/bolt_sw_timer.c **** 
+   8:Src/bolt_sw_timer.c **** #include "bolt_sw_timer.h"
+   9:Src/bolt_sw_timer.c **** #include "main.h"
+  10:Src/bolt_sw_timer.c **** #include "stm32g4xx_hal.h"
+  11:Src/bolt_sw_timer.c **** 
+  12:Src/bolt_sw_timer.c **** // Construct a new timer with a wait time in milliseconds
+  13:Src/bolt_sw_timer.c **** SWTimer SWTimer_construct(uint32_t waitTime)
+  14:Src/bolt_sw_timer.c **** {
+  30              		.loc 1 14 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  15:Src/bolt_sw_timer.c ****     SWTimer timer;
+  35              		.loc 1 15 5 view .LVU1
+  16:Src/bolt_sw_timer.c **** 
+  17:Src/bolt_sw_timer.c ****     timer.startCounter = 0;
+  36              		.loc 1 17 5 view .LVU2
+  37              		.loc 1 17 24 is_stmt 0 view .LVU3
+  38 0000 0022     		movs	r2, #0
+  39 0002 4260     		str	r2, [r0, #4]
+  18:Src/bolt_sw_timer.c ****     timer.waitTime_ms = waitTime;
+  40              		.loc 1 18 5 is_stmt 1 view .LVU4
+ARM GAS  C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s 			page 2
+
+
+  41              		.loc 1 18 23 is_stmt 0 view .LVU5
+  42 0004 0160     		str	r1, [r0]
+  19:Src/bolt_sw_timer.c **** 
+  20:Src/bolt_sw_timer.c ****     return timer;
+  43              		.loc 1 20 5 is_stmt 1 view .LVU6
+  21:Src/bolt_sw_timer.c **** }
+  44              		.loc 1 21 1 is_stmt 0 view .LVU7
+  45 0006 7047     		bx	lr
+  46              		.cfi_endproc
+  47              	.LFE132:
+  49              		.section	.text.SWTimer_start,"ax",%progbits
+  50              		.align	1
+  51              		.global	SWTimer_start
+  52              		.syntax unified
+  53              		.thumb
+  54              		.thumb_func
+  56              	SWTimer_start:
+  57              	.LVL1:
+  58              	.LFB133:
+  22:Src/bolt_sw_timer.c **** 
+  23:Src/bolt_sw_timer.c **** // Start a timer
+  24:Src/bolt_sw_timer.c **** void SWTimer_start(SWTimer *timer_p)
+  25:Src/bolt_sw_timer.c **** {
+  59              		.loc 1 25 1 is_stmt 1 view -0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63              		@ link register save eliminated.
+  26:Src/bolt_sw_timer.c ****     timer_p->startCounter = MILLIS;
+  64              		.loc 1 26 5 view .LVU9
+  65              		.loc 1 26 29 is_stmt 0 view .LVU10
+  66 0000 4FF0E023 		mov	r3, #-536813568
+  67 0004 9B69     		ldr	r3, [r3, #24]
+  68 0006 034A     		ldr	r2, .L3
+  69 0008 A2FB0323 		umull	r2, r3, r2, r3
+  70 000c 9B09     		lsrs	r3, r3, #6
+  71              		.loc 1 26 27 view .LVU11
+  72 000e 4360     		str	r3, [r0, #4]
+  27:Src/bolt_sw_timer.c **** }
+  73              		.loc 1 27 1 view .LVU12
+  74 0010 7047     		bx	lr
+  75              	.L4:
+  76 0012 00BF     		.align	2
+  77              	.L3:
+  78 0014 D34D6210 		.word	274877907
+  79              		.cfi_endproc
+  80              	.LFE133:
+  82              		.section	.text.SWTimer_elapsedTimeMS,"ax",%progbits
+  83              		.align	1
+  84              		.global	SWTimer_elapsedTimeMS
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  89              	SWTimer_elapsedTimeMS:
+  90              	.LVL2:
+  91              	.LFB134:
+  28:Src/bolt_sw_timer.c **** 
+ARM GAS  C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s 			page 3
+
+
+  29:Src/bolt_sw_timer.c **** // Returns number of elapsed milliseconds
+  30:Src/bolt_sw_timer.c **** uint32_t SWTimer_elapsedTimeMS(SWTimer *timer_p)
+  31:Src/bolt_sw_timer.c **** {
+  92              		.loc 1 31 1 is_stmt 1 view -0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              		@ link register save eliminated.
+  32:Src/bolt_sw_timer.c ****     uint32_t elapsed_ms = MILLIS - timer_p->startCounter;
+  97              		.loc 1 32 5 view .LVU14
+  98              		.loc 1 32 27 is_stmt 0 view .LVU15
+  99 0000 4FF0E023 		mov	r3, #-536813568
+ 100 0004 9B69     		ldr	r3, [r3, #24]
+ 101 0006 034A     		ldr	r2, .L6
+ 102 0008 A2FB0323 		umull	r2, r3, r2, r3
+ 103              		.loc 1 32 43 view .LVU16
+ 104 000c 4068     		ldr	r0, [r0, #4]
+ 105              	.LVL3:
+  33:Src/bolt_sw_timer.c ****     return elapsed_ms;
+ 106              		.loc 1 33 5 is_stmt 1 view .LVU17
+  34:Src/bolt_sw_timer.c **** }
+ 107              		.loc 1 34 1 is_stmt 0 view .LVU18
+ 108 000e C0EB9310 		rsb	r0, r0, r3, lsr #6
+ 109              	.LVL4:
+ 110              		.loc 1 34 1 view .LVU19
+ 111 0012 7047     		bx	lr
+ 112              	.L7:
+ 113              		.align	2
+ 114              	.L6:
+ 115 0014 D34D6210 		.word	274877907
+ 116              		.cfi_endproc
+ 117              	.LFE134:
+ 119              		.section	.text.SWTimer_expired,"ax",%progbits
+ 120              		.align	1
+ 121              		.global	SWTimer_expired
+ 122              		.syntax unified
+ 123              		.thumb
+ 124              		.thumb_func
+ 126              	SWTimer_expired:
+ 127              	.LVL5:
+ 128              	.LFB135:
+  35:Src/bolt_sw_timer.c **** 
+  36:Src/bolt_sw_timer.c **** // Returns true if the timer is expired
+  37:Src/bolt_sw_timer.c **** bool SWTimer_expired(SWTimer *timer_p)
+  38:Src/bolt_sw_timer.c **** {
+ 129              		.loc 1 38 1 is_stmt 1 view -0
+ 130              		.cfi_startproc
+ 131              		@ args = 0, pretend = 0, frame = 0
+ 132              		@ frame_needed = 0, uses_anonymous_args = 0
+ 133              		.loc 1 38 1 is_stmt 0 view .LVU21
+ 134 0000 10B5     		push	{r4, lr}
+ 135              		.cfi_def_cfa_offset 8
+ 136              		.cfi_offset 4, -8
+ 137              		.cfi_offset 14, -4
+ 138 0002 0446     		mov	r4, r0
+  39:Src/bolt_sw_timer.c ****     uint32_t elapsed_ms = SWTimer_elapsedTimeMS(timer_p);
+ 139              		.loc 1 39 5 is_stmt 1 view .LVU22
+ARM GAS  C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s 			page 4
+
+
+ 140              		.loc 1 39 27 is_stmt 0 view .LVU23
+ 141 0004 FFF7FEFF 		bl	SWTimer_elapsedTimeMS
+ 142              	.LVL6:
+  40:Src/bolt_sw_timer.c ****     return elapsed_ms >= timer_p->waitTime_ms;
+ 143              		.loc 1 40 5 is_stmt 1 view .LVU24
+ 144              		.loc 1 40 33 is_stmt 0 view .LVU25
+ 145 0008 2368     		ldr	r3, [r4]
+  41:Src/bolt_sw_timer.c **** }
+ 146              		.loc 1 41 1 view .LVU26
+ 147 000a 8342     		cmp	r3, r0
+ 148 000c 8CBF     		ite	hi
+ 149 000e 0020     		movhi	r0, #0
+ 150              	.LVL7:
+ 151              		.loc 1 41 1 view .LVU27
+ 152 0010 0120     		movls	r0, #1
+ 153 0012 10BD     		pop	{r4, pc}
+ 154              		.loc 1 41 1 view .LVU28
+ 155              		.cfi_endproc
+ 156              	.LFE135:
+ 158              		.global	__aeabi_ui2d
+ 159              		.global	__aeabi_ddiv
+ 160              		.global	__aeabi_dcmpgt
+ 161              		.section	.text.SWTimer_percentElapsed,"ax",%progbits
+ 162              		.align	1
+ 163              		.global	SWTimer_percentElapsed
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	SWTimer_percentElapsed:
+ 169              	.LVL8:
+ 170              	.LFB136:
+  42:Src/bolt_sw_timer.c **** 
+  43:Src/bolt_sw_timer.c **** /**
+  44:Src/bolt_sw_timer.c ****  * Determines the progress percentage of time expired. A timer starts off at zero percent progress.
+  45:Src/bolt_sw_timer.c ****  * If, say, a timer needed to wait 10000 ms and 7000 ms have elapsed already since the timer
+  46:Src/bolt_sw_timer.c ****  * was started, the percentage returned is 0.7. For any timer which has already expired or which wa
+  47:Src/bolt_sw_timer.c ****  * never started, the percentage returned is 1.0.
+  48:Src/bolt_sw_timer.c ****  *
+  49:Src/bolt_sw_timer.c ****  * @param timer_p:    The target timer used in determining the percent progress elapsed
+  50:Src/bolt_sw_timer.c ****  * @return the percentage of time which has elapsed since the timer was started.
+  51:Src/bolt_sw_timer.c ****  */
+  52:Src/bolt_sw_timer.c **** double SWTimer_percentElapsed(SWTimer *timer_p)
+  53:Src/bolt_sw_timer.c **** {
+ 171              		.loc 1 53 1 is_stmt 1 view -0
+ 172              		.cfi_startproc
+ 173              		@ args = 0, pretend = 0, frame = 0
+ 174              		@ frame_needed = 0, uses_anonymous_args = 0
+ 175              		.loc 1 53 1 is_stmt 0 view .LVU30
+ 176 0000 D0B5     		push	{r4, r6, r7, lr}
+ 177              		.cfi_def_cfa_offset 16
+ 178              		.cfi_offset 4, -16
+ 179              		.cfi_offset 6, -12
+ 180              		.cfi_offset 7, -8
+ 181              		.cfi_offset 14, -4
+ 182 0002 2DED028B 		vpush.64	{d8}
+ 183              		.cfi_def_cfa_offset 24
+ 184              		.cfi_offset 80, -24
+ARM GAS  C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s 			page 5
+
+
+ 185              		.cfi_offset 81, -20
+  54:Src/bolt_sw_timer.c ****     if (timer_p->waitTime_ms == 0)
+ 186              		.loc 1 54 5 is_stmt 1 view .LVU31
+ 187              		.loc 1 54 16 is_stmt 0 view .LVU32
+ 188 0006 0368     		ldr	r3, [r0]
+ 189              		.loc 1 54 8 view .LVU33
+ 190 0008 43B9     		cbnz	r3, .L15
+  55:Src/bolt_sw_timer.c ****         return 1.0;
+ 191              		.loc 1 55 16 view .LVU34
+ 192 000a 9FED138B 		vldr.64	d8, .L16
+ 193              	.LVL9:
+ 194              	.L10:
+  56:Src/bolt_sw_timer.c **** 
+  57:Src/bolt_sw_timer.c ****     uint32_t elapsed_ms = SWTimer_elapsedTimeMS(timer_p);
+  58:Src/bolt_sw_timer.c **** 
+  59:Src/bolt_sw_timer.c ****     double result = (double)elapsed_ms / (double)timer_p->waitTime_ms;
+  60:Src/bolt_sw_timer.c **** 
+  61:Src/bolt_sw_timer.c ****     if (result > 1.0)
+  62:Src/bolt_sw_timer.c ****         return 1.0;
+  63:Src/bolt_sw_timer.c **** 
+  64:Src/bolt_sw_timer.c ****     return result;
+  65:Src/bolt_sw_timer.c **** }...
+ 195              		.loc 1 65 1 view .LVU35
+ 196 000e B0EE480A 		vmov.f32	s0, s16
+ 197 0012 F0EE680A 		vmov.f32	s1, s17
+ 198 0016 BDEC028B 		vldm	sp!, {d8}
+ 199              		.cfi_remember_state
+ 200              		.cfi_restore 80
+ 201              		.cfi_restore 81
+ 202              		.cfi_def_cfa_offset 16
+ 203 001a D0BD     		pop	{r4, r6, r7, pc}
+ 204              	.LVL10:
+ 205              	.L15:
+ 206              		.cfi_restore_state
+ 207              		.loc 1 65 1 view .LVU36
+ 208 001c 0446     		mov	r4, r0
+  57:Src/bolt_sw_timer.c ****     uint32_t elapsed_ms = SWTimer_elapsedTimeMS(timer_p);
+ 209              		.loc 1 57 5 is_stmt 1 view .LVU37
+  57:Src/bolt_sw_timer.c ****     uint32_t elapsed_ms = SWTimer_elapsedTimeMS(timer_p);
+ 210              		.loc 1 57 27 is_stmt 0 view .LVU38
+ 211 001e FFF7FEFF 		bl	SWTimer_elapsedTimeMS
+ 212              	.LVL11:
+  59:Src/bolt_sw_timer.c ****     double result = (double)elapsed_ms / (double)timer_p->waitTime_ms;
+ 213              		.loc 1 59 5 is_stmt 1 view .LVU39
+  59:Src/bolt_sw_timer.c ****     double result = (double)elapsed_ms / (double)timer_p->waitTime_ms;
+ 214              		.loc 1 59 21 is_stmt 0 view .LVU40
+ 215 0022 FFF7FEFF 		bl	__aeabi_ui2d
+ 216              	.LVL12:
+  59:Src/bolt_sw_timer.c ****     double result = (double)elapsed_ms / (double)timer_p->waitTime_ms;
+ 217              		.loc 1 59 21 view .LVU41
+ 218 0026 0646     		mov	r6, r0
+ 219 0028 0F46     		mov	r7, r1
+  59:Src/bolt_sw_timer.c ****     double result = (double)elapsed_ms / (double)timer_p->waitTime_ms;
+ 220              		.loc 1 59 42 view .LVU42
+ 221 002a 2068     		ldr	r0, [r4]
+ 222 002c FFF7FEFF 		bl	__aeabi_ui2d
+ 223              	.LVL13:
+ARM GAS  C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s 			page 6
+
+
+ 224 0030 0246     		mov	r2, r0
+ 225 0032 0B46     		mov	r3, r1
+  59:Src/bolt_sw_timer.c ****     double result = (double)elapsed_ms / (double)timer_p->waitTime_ms;
+ 226              		.loc 1 59 12 view .LVU43
+ 227 0034 3046     		mov	r0, r6
+ 228 0036 3946     		mov	r1, r7
+ 229 0038 FFF7FEFF 		bl	__aeabi_ddiv
+ 230              	.LVL14:
+ 231 003c 0246     		mov	r2, r0
+ 232 003e 0B46     		mov	r3, r1
+ 233 0040 43EC182B 		vmov	d8, r2, r3
+ 234              	.LVL15:
+  61:Src/bolt_sw_timer.c ****     if (result > 1.0)
+ 235              		.loc 1 61 5 is_stmt 1 view .LVU44
+  61:Src/bolt_sw_timer.c ****     if (result > 1.0)
+ 236              		.loc 1 61 8 is_stmt 0 view .LVU45
+ 237 0044 0022     		movs	r2, #0
+ 238              	.LVL16:
+  61:Src/bolt_sw_timer.c ****     if (result > 1.0)
+ 239              		.loc 1 61 8 view .LVU46
+ 240 0046 064B     		ldr	r3, .L16+8
+ 241 0048 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 242              	.LVL17:
+ 243 004c 0028     		cmp	r0, #0
+ 244 004e DED0     		beq	.L10
+  62:Src/bolt_sw_timer.c ****         return 1.0;
+ 245              		.loc 1 62 16 view .LVU47
+ 246 0050 9FED018B 		vldr.64	d8, .L16
+ 247              	.LVL18:
+  62:Src/bolt_sw_timer.c ****         return 1.0;
+ 248              		.loc 1 62 16 view .LVU48
+ 249 0054 DBE7     		b	.L10
+ 250              	.L17:
+ 251 0056 00BF     		.align	3
+ 252              	.L16:
+ 253 0058 00000000 		.word	0
+ 254 005c 0000F03F 		.word	1072693248
+ 255 0060 0000F03F 		.word	1072693248
+ 256              		.cfi_endproc
+ 257              	.LFE136:
+ 259              		.text
+ 260              	.Letext0:
+ 261              		.file 2 "C:/Users/Colton Tshudy/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpac
+ 262              		.file 3 "C:/Users/Colton Tshudy/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpac
+ 263              		.file 4 "Inc/bolt_sw_timer.h"
+ 264              		.file 5 "Drivers/CMSIS/Include/core_cm4.h"
+ARM GAS  C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bolt_sw_timer.c
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:21     .text.SWTimer_construct:00000000 $t
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:27     .text.SWTimer_construct:00000000 SWTimer_construct
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:50     .text.SWTimer_start:00000000 $t
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:56     .text.SWTimer_start:00000000 SWTimer_start
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:78     .text.SWTimer_start:00000014 $d
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:83     .text.SWTimer_elapsedTimeMS:00000000 $t
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:89     .text.SWTimer_elapsedTimeMS:00000000 SWTimer_elapsedTimeMS
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:115    .text.SWTimer_elapsedTimeMS:00000014 $d
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:120    .text.SWTimer_expired:00000000 $t
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:126    .text.SWTimer_expired:00000000 SWTimer_expired
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:162    .text.SWTimer_percentElapsed:00000000 $t
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:168    .text.SWTimer_percentElapsed:00000000 SWTimer_percentElapsed
+C:\Users\COLTON~1\AppData\Local\Temp\ccABcS98.s:253    .text.SWTimer_percentElapsed:00000058 $d
+
+UNDEFINED SYMBOLS
+__aeabi_ui2d
+__aeabi_ddiv
+__aeabi_dcmpgt
