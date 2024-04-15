@@ -1,16 +1,6 @@
 {
     "configurations": [
         {
-            "cwd": "${workspaceFolder}",
-            "executable": "./build/pdu-firmware-mx.elf",
-            "name": "Debug with ST-Link",
-            "request": "launch",
-            "type": "cortex-debug",
-            "runToEntryPoint": "main",
-            "showDevDebugOutput": "none",
-            "servertype": "stlink"
-        },
-        {
             "showDevDebugOutput": "parsed",
             "cwd": "${workspaceRoot}",
             "executable": "./build/pdu-firmware-mx.elf",
@@ -27,7 +17,7 @@
         {
             "showDevDebugOutput": "parsed",
             "cwd": "${workspaceRoot}",
-            "executable": "./build/pdu-firmware-mx.elf",
+            "executable": "./build/pdu-firmware-testing-mx.elf",
             "name": "Attach STM32",
             "request": "attach",
             "type": "cortex-debug",
@@ -37,9 +27,6 @@
             "configFiles": [
                 "openocd.cfg"
             ]
-        },
-        {
-            "svdPath": "C:/ST/STM32CubeIDE_1.15.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.productdb.debug_2.1.200.202403061128/resources/cmsis/STMicroelectronics_CMSIS_SVD/STM32F474.svd"
         }
     ]
 }
