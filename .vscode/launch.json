@@ -2,7 +2,7 @@
     "configurations": [
         {
             "cwd": "${workspaceFolder}",
-            "executable": "./bin/executable.elf",
+            "executable": "./build/pdu-firmware-mx.elf",
             "name": "Debug with ST-Link",
             "request": "launch",
             "type": "cortex-debug",
@@ -39,7 +39,7 @@
             ]
         },
         {
-            "svdPath": "/opt/ST/STM32CubeCLT/STMicroelectronics_CMSIS_SVD/STM32F0x0.svd"
+            "svdPath": "C:/ST/STM32CubeIDE_1.15.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.productdb.debug_2.1.200.202403061128/resources/cmsis/STMicroelectronics_CMSIS_SVD/STM32F474.svd"
         }
     ]
 }

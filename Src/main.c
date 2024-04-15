@@ -20,10 +20,10 @@
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
-#include "bolt_application.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "bolt_application.h"
 
 /* USER CODE END Includes */
 
