@@ -24,23 +24,40 @@ Application applicationSetup()
 {
   Application app;
   app.nonblocking_led_timer = SWTimer_construct(MS_IN_SECONDS);
+  SWTimer_start(&app.nonblocking_led_timer);
   return app;
 }
 
 void applicationLoop(Application *app_p)
 {
-  // Blink LED to make sure application is not halted
-  // Think of it as the PDU's "heartbeat"...
   nonBlockingLED(app_p);
 
-  char message[] = "Hello, UART!\r\n";
-  HAL_UART_Transmit(&hlpuart1, (uint8_t *)message, 14, HAL_MAX_DELAY);
+  float test = 100;
+  printVal(HAL_GetTick());
 }
 
+/**
+ * @brief Blinks LD2 to visually indicate firmware is not halted
+ * 
+ * @param app_p 
+ */
 void nonBlockingLED(Application *app_p)
 {
   if (SWTimer_expired(&app_p->nonblocking_led_timer))
   {
     HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    SWTimer_start(&app_p->nonblocking_led_timer);
   }
+}
+
+/**
+ * @brief Prints a value to lpuart1
+ *
+ * @param val
+ */
+void printVal(uint32_t val)
+{
+  char buf[100];
+  int len = snprintf(buf, sizeof buf, "%d\n\r", val);
+  HAL_UART_Transmit(&hlpuart1, buf, len, HAL_MAX_DELAY);
 }

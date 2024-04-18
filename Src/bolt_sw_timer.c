@@ -6,10 +6,14 @@
  */
 
 #include "bolt_sw_timer.h"
-#include "main.h"
 #include "stm32g4xx_hal.h"
 
-// Construct a new timer with a wait time in milliseconds
+/**
+ * @brief Construct a new timer. All timers must be constrcuted before use.
+ *
+ * @param waitTime in milliseconds
+ * @return SWTimer
+ */
 SWTimer SWTimer_construct(uint32_t waitTime)
 {
     SWTimer timer;
@@ -20,20 +24,35 @@ SWTimer SWTimer_construct(uint32_t waitTime)
     return timer;
 }
 
-// Start a timer
+/**
+ * @brief Start a timer.
+ *
+ * @param timer_p pointer to a timer
+ */
 void SWTimer_start(SWTimer *timer_p)
 {
-    timer_p->startCounter = MILLIS;
+    timer_p->startCounter = HAL_GetTick();
 }
 
-// Returns number of elapsed milliseconds
+/**
+ * @brief Returns number of elapsed milliseconds
+ *
+ * @param timer_p
+ * @return uint32_t
+ */
 uint32_t SWTimer_elapsedTimeMS(SWTimer *timer_p)
 {
-    uint32_t elapsed_ms = MILLIS - timer_p->startCounter;
+    uint32_t elapsed_ms = HAL_GetTick() - timer_p->startCounter;
     return elapsed_ms;
 }
 
-// Returns true if the timer is expired
+/**
+ * @brief Returns true if the timer is expired
+ *
+ * @param timer_p
+ * @return true
+ * @return false
+ */
 bool SWTimer_expired(SWTimer *timer_p)
 {
     uint32_t elapsed_ms = SWTimer_elapsedTimeMS(timer_p);
@@ -46,7 +65,7 @@ bool SWTimer_expired(SWTimer *timer_p)
  * was started, the percentage returned is 0.7. For any timer which has already expired or which was
  * never started, the percentage returned is 1.0.
  *
- * @param timer_p:    The target timer used in determining the percent progress elapsed
+ * @param timer_p The target timer used in determining the percent progress elapsed
  * @return the percentage of time which has elapsed since the timer was started.
  */
 double SWTimer_percentElapsed(SWTimer *timer_p)

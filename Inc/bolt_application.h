@@ -34,13 +34,9 @@ struct _Application
 };
 typedef struct _Application Application;
 
-/* Setup the application struct */
 Application applicationSetup();
-
-/* Code to run continuously */
 void applicationLoop(Application* app_p);
-
-/* Blinks an LED based on nonblocking_led_timer */
 void nonBlockingLED();
+void printVal(uint32_t val);
 
 #endif /* __APPLICATION_H */
