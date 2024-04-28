@@ -1,19 +1,11 @@
 /**
- ******************************************************************************
- * @file           : main.h
- * @brief          : Header for main.c file.
- *                   This file contains the common defines of the application.
- ******************************************************************************
- * @attention
- *
- * Copyright (c) 2024 STMicroelectronics.
- * All rights reserved.
- *
- * This software is licensed under terms that can be found in the LICENSE file
- * in the root directory of this software component.
- * If no LICENSE file comes with this software, it is provided AS-IS.
- *
- ******************************************************************************
+ * @file bolt_application.h
+ * @author Colton Tshudy (coltont@vt.edu)
+ * @brief header file for most things
+ * @date 2024-04-22
+ * 
+ * @copyright Copyright (c) 2024 BOLT at Virginia Tech
+ * 
  */
 
 #ifndef __APPLICATION_H

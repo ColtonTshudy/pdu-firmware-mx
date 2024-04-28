@@ -1,8 +1,11 @@
-/*
- * bolt_sw_timer.c
- *
- *  Created on: 4/15/2022
- *      Author: Colton Tshudy
+/**
+ * @file bolt_sw_timer.c
+ * @author Colton Tshudy (coltont@vt.edu)
+ * @brief software timer based on HAL system tick timer
+ * @date 2024-04-22
+ * 
+ * @copyright Copyright (c) 2024 BOLT at Virginia Tech
+ * 
  */
 
 #include "bolt_sw_timer.h"

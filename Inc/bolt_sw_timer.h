@@ -1,8 +1,11 @@
-/*
- * bolt_sw_timer.h
- *
- *  Created on: 4/15/2022
- *      Author: Colton Tshduy
+/**
+ * @file bolt_sw_timer.h
+ * @author Colton Tshudy (coltont@vt.edu)
+ * @brief header file for software timer
+ * @date 2024-04-22
+ * 
+ * @copyright Copyright (c) 2024 BOLT at Virginia Tech
+ * 
  */
 
 #ifndef __BOLT_SW_TIMER_H
