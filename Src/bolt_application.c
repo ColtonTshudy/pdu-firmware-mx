@@ -38,6 +38,7 @@ void nonBlockingLED(Application *app_p)
   if (SWTimer_expired(&app_p->nonblocking_led_timer))
   {
     HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    HAL_GPIO_TogglePin(GPIO_PDU_STATUS_GPIO_Port, GPIO_PDU_STATUS_Pin);
     SWTimer_start(&app_p->nonblocking_led_timer);
   }
 }
