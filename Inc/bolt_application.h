@@ -21,8 +21,11 @@
 /* Application Struct */
 struct _Application
 {
-    // Variables used in main.cpp Timers
+    // Variables used for non-blocking LED
     SWTimer nonblocking_led_timer;
+
+    // Variables used for ADC
+    
 };
 typedef struct _Application Application;
 
