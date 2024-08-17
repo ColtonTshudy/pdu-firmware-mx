@@ -12,8 +12,8 @@
         "STM32G474xx",
         "USE_HAL_DRIVER"
       ],
-      "compilerPath": "C:\\USERS\\TSHUD\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\ARM-NONE-EABI-GCC\\13.2.1-1.1.1\\.CONTENT\\BIN\\ARM-NONE-EABI-GCC.EXE",
-      "compileCommands": "${workspaceFolder}\\build\\Debug\\compile_commands.json"
+      "compilerPath": "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin/arm-none-eabi-gcc.exe",
+      "compileCommands": "${workspaceFolder}/build/Debug/compile_commands.json"
     }
   ],
   "version": 4
