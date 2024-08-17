@@ -13,7 +13,6 @@
 
 /* Includes */
 #include "bolt_sw_timer.h"
-#include "main.h"
 
 /* Macros */
 #define MS_IN_SECONDS 1000
