@@ -3,6 +3,10 @@
     "cortex-debug.openocdPath": "C:\\USERS\\TSHUD\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\OPENOCD\\0.12.0-3.1\\.CONTENT\\BIN\\OPENOCD.EXE",
     "files.associations": {
         "bolt_sw_timer.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "usart.h": "c"
+    },
+    "editor.tokenColorCustomizations": {
+        "comments": "#6b6b6b"
     }
 }
