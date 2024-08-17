@@ -62,7 +62,7 @@ BraceWrapping: {
     BeforeCatch: 'true'
     BeforeElse: 'true'
     IndentBraces: 'false'
-    AfterExternBlock: 'true'
+    AfterExternBlock: 'false'
     SplitEmptyFunction: 'false'
     SplitEmptyRecord: 'false'
     SplitEmptyNamespace: 'true'
