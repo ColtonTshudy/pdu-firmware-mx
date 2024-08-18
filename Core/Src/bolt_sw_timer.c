@@ -15,11 +15,11 @@
  * @brief Construct a new timer. All timers must be constrcuted before use.
  *
  * @param waitTime in milliseconds
- * @return SWTimer
+ * @return struct SWTimer
  */
-SWTimer SWTimer_construct(uint32_t waitTime)
+struct SWTimer SWTimer_construct(uint32_t waitTime)
 {
-	SWTimer timer;
+	struct SWTimer timer;
 
 	timer.startCounter = 0;
 	timer.waitTime_ms = waitTime;
@@ -32,7 +32,7 @@ SWTimer SWTimer_construct(uint32_t waitTime)
  *
  * @param timer_p pointer to a timer
  */
-void SWTimer_start(SWTimer* timer_p)
+void SWTimer_start(struct SWTimer* timer_p)
 {
 	timer_p->startCounter = HAL_GetTick();
 }
@@ -43,7 +43,7 @@ void SWTimer_start(SWTimer* timer_p)
  * @param timer_p
  * @return uint32_t
  */
-uint32_t SWTimer_elapsedTimeMS(SWTimer* timer_p)
+uint32_t SWTimer_elapsedTimeMS(struct SWTimer* timer_p)
 {
 	uint32_t elapsed_ms = HAL_GetTick() - timer_p->startCounter;
 	return elapsed_ms;
@@ -56,7 +56,7 @@ uint32_t SWTimer_elapsedTimeMS(SWTimer* timer_p)
  * @return true
  * @return false
  */
-bool SWTimer_expired(SWTimer* timer_p)
+bool SWTimer_expired(struct SWTimer* timer_p)
 {
 	uint32_t elapsed_ms = SWTimer_elapsedTimeMS(timer_p);
 	return elapsed_ms >= timer_p->waitTime_ms;
@@ -71,7 +71,7 @@ bool SWTimer_expired(SWTimer* timer_p)
  * @param timer_p The target timer used in determining the percent progress elapsed
  * @return the percentage of time which has elapsed since the timer was started.
  */
-double SWTimer_percentElapsed(SWTimer* timer_p)
+double SWTimer_percentElapsed(struct SWTimer* timer_p)
 {
 	if(timer_p->waitTime_ms == 0)
 		return 1.0;

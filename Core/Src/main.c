@@ -18,6 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "bolt_application.h"
+#include "debug.h"
 #include <assert.h>
 #include <stdio.h>
 
@@ -38,18 +40,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-// Comment this out to disable printing of debug messages to LPUART1
-#define DEBUG_MODE
 
-#ifdef DEBUG_MODE
-#	define LOG(_fmt, ...)                                                                         \
-		do                                                                                         \
-		{                                                                                          \
-			printf(" [LOG] " _fmt "\r\n", ##__VA_ARGS__);                                          \
-		} while(0)
-#else
-#	define LOG(_fmt, ...)
-#endif
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -64,7 +55,7 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN PV */
-
+struct Application app;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -133,7 +124,14 @@ int main(void)
 	// BOLT code starts here
 	// pause for a second, otherwise the uart terminal might miss messages on bootup
 	HAL_Delay(1000);
-	LOG("Hello, World!");
+	LOG_DBG("Hello, World!");
+
+	app = applicationSetup();
+	app.hadc1 = &hadc1;
+	app.hfdcan1 = &hfdcan1;
+	app.hfdcan2 = &hfdcan2;
+	app.htim1 = &htim1;
+	app.htim3 = &htim3;
 
 	/* USER CODE END 2 */
 
@@ -141,6 +139,7 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while(1)
 	{
+		applicationLoop(&app);
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
@@ -439,7 +438,7 @@ static void MX_TIM1_Init(void)
 		Error_Handler();
 	}
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 0;
+	sConfigOC.Pulse = 0; //seems to only be variable between 300 and 375?
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -638,7 +637,7 @@ void Error_Handler(void)
 	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	__disable_irq();
-	LOG("HAL error occured");
+	LOG_DBG("HAL error occured");
 	while(1)
 	{
 	}

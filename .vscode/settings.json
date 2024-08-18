@@ -1,9 +1,16 @@
 {
     "cortex-debug.armToolchainPath": "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin",
     "files.associations": {
+        ".clang-format": "yaml",
         "bolt_sw_timer.h": "c",
         "main.h": "c",
-        "usart.h": "c"
+        "usart.h": "c",
+        "stdint.h": "c",
+        "status_led_control.h": "c",
+        "stm32g4xx_hal.h": "c",
+        "stm32g4xx_hal_adc.h": "c",
+        "bolt_communications.h": "c",
+        "stdbool.h": "c"
     },
     "editor.tokenColorCustomizations": {
         "comments": "#6b6b6b"

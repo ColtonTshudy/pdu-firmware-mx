@@ -9,7 +9,7 @@
             "servertype": "openocd",
             "preLaunchTask": "Build",
             "device": "stm32g474",
-            // "showDevDebugOutput": "parsed",
+            "showDevDebugOutput": "parsed",
             "configFiles": [
                 "stm32g4.cfg"
             ],

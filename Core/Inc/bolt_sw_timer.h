@@ -16,17 +16,16 @@
 #include <stdint.h>
 
 /* Software Timer Struct*/
-struct _SWTimer
+struct SWTimer
 {
 	uint32_t waitTime_ms;
 	uint32_t startCounter; //value of systick when the timer starts
 };
-typedef struct _SWTimer SWTimer;
 
-SWTimer SWTimer_construct(uint32_t waitTime_ms);
-void SWTimer_start(SWTimer* timer);
-uint32_t SWTimer_elapsedTime(SWTimer* timer);
-bool SWTimer_expired(SWTimer* timer);
-double SWTimer_percentElapsed(SWTimer* timer_p);
+struct SWTimer SWTimer_construct(uint32_t waitTime_ms);
+void SWTimer_start(struct SWTimer* timer);
+uint32_t SWTimer_elapsedTime(struct SWTimer* timer);
+bool SWTimer_expired(struct SWTimer* timer);
+double SWTimer_percentElapsed(struct SWTimer* timer_p);
 
 #endif /* __BOLT_SW_TIMER_H */
