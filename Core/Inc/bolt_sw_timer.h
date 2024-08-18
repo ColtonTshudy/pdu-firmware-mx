@@ -12,8 +12,8 @@
 #define __BOLT_SW_TIMER_H
 
 /* Includes */
-#include "stdbool.h"
-#include "stdint.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 /* Software Timer Struct*/
 struct _SWTimer

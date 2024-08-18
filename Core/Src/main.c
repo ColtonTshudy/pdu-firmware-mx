@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include <assert.h>
 #include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
@@ -37,7 +38,18 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+// Comment this out to disable printing of debug messages to LPUART1
+#define DEBUG_MODE
 
+#ifdef DEBUG_MODE
+#	define LOG(_fmt, ...)                                                                         \
+		do                                                                                         \
+		{                                                                                          \
+			printf(" [LOG] " _fmt "\r\n", ##__VA_ARGS__);                                          \
+		} while(0)
+#else
+#	define LOG(_fmt, ...)
+#endif
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -65,6 +77,13 @@ static void MX_LPUART1_UART_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
+#ifdef __GNUC__
+/* With GCC, small printf (option LD Linker->Libraries->Small printf
+     set to 'Yes') calls __io_putchar() */
+#	define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#	define PUTCHAR_PROTOTYPE int fputc(int ch, FILE* f)
+#endif /* __GNUC__ */
 
 /* USER CODE END PFP */
 
@@ -108,7 +127,13 @@ int main(void)
 	MX_LPUART1_UART_Init();
 	MX_TIM1_Init();
 	MX_TIM3_Init();
+
 	/* USER CODE BEGIN 2 */
+
+	// BOLT code starts here
+	// pause for a second, otherwise the uart terminal might miss messages on bootup
+	HAL_Delay(1000);
+	LOG("Hello, World!");
 
 	/* USER CODE END 2 */
 
@@ -588,6 +613,20 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+	/* Place your implementation of fputc here */
+	/* e.g. write a character to the EVAL_COM1 and Loop until the end of transmission */
+	HAL_UART_Transmit(&hlpuart1, (uint8_t*)&ch, 1, 0xFFFF);
+
+	return ch;
+}
+
 /* USER CODE END 4 */
 
 /**
@@ -599,6 +638,7 @@ void Error_Handler(void)
 	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	__disable_irq();
+	LOG("HAL error occured");
 	while(1)
 	{
 	}

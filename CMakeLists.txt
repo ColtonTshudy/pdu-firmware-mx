@@ -66,3 +66,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
     # Add user defined libraries
 )
+
+# Pass the "DEBUG" definition to the c code
+target_compile_definitions(${CMAKE_PROJECT_NAME}
+    PRIVATE
+        # If the debug configuration pass the DEBUG define to the compiler 
+        $<$<CONFIG:Debug>:DEBUG>
+)
