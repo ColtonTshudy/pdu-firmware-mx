@@ -11,10 +11,10 @@
 #include "bolt_application.h"
 #include "bolt_communications.h"
 #include "bolt_config.h"
+#include "bolt_debug.h"
+#include "bolt_led_control.h"
 #include "bolt_measurements.h"
-#include "debug.h"
 #include "main.h"
-#include "status_led_control.h"
 #include <stdio.h>
 
 /**
@@ -22,13 +22,25 @@
  * 
  * @return struct Application 
  */
-struct Application applicationSetup()
+struct Application applicationSetup(ADC_HandleTypeDef* hadc1,
+									FDCAN_HandleTypeDef* hfdcan1,
+									FDCAN_HandleTypeDef* hfdcan2,
+									TIM_HandleTypeDef* htim1,
+									TIM_HandleTypeDef* htim3)
 {
 	struct Application app;
+	app.hadc1 = hadc1;
+	app.hfdcan1 = hfdcan1;
+	app.hfdcan2 = hfdcan2;
+	app.htim1 = htim1;
+	app.htim3 = htim3;
+
 	app.pcan_watchdog = SWTimer_construct(CONFIG_PCAN_TIMEOUT);
 
+	HAL_TIM_PWM_Start(htim1, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(htim3, TIM_CHANNEL_1);
 	SWTimer_start(&app.pcan_watchdog);
-	// PCAN_Config_Reception(app.hfdcan1);
+	startPCAN(app.hfdcan2);
 
 	return app;
 }
@@ -42,17 +54,17 @@ void applicationLoop(struct Application* app_p)
 {
 	// Code to run always
 	measureInputs(app_p);
-	readPCAN(app_p);
-	LED_Heartbeat(!SWTimer_expired(&(app_p->pcan_watchdog)));
+	// readPCAN(app_p);
 
 	// (inside FSM) Code to run state-dependently
 	PDU_State next_state = applicationFSM(app_p);
 	app_p->state = next_state;
 
 	// Send CAN messages
-	// sendPCAN(app_p);
+	// sendPCANMessage(app_p->hfdcan2, app_p);
 
-	HAL_TIM_PWM_Start(app_p->htim1, TIM_CHANNEL_1);
+	LED_Heartbeat(!SWTimer_expired(&(app_p->pcan_watchdog)));
+	LED_AuxLow(app_p->aux_volts);
 }
 
 /**

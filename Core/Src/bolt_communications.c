@@ -1,4 +1,5 @@
 #include "bolt_communications.h"
+#include "bolt_debug.h"
 #include "stdbool.h"
 #include "stdint.h"
 
@@ -6,43 +7,29 @@
  * @brief Configures FDCAN1 for PCAN reception
  * @return HAL status
  */
-HAL_StatusTypeDef PCAN_Config_Reception(FDCAN_HandleTypeDef* hfdcan1)
+void startPCAN(FDCAN_HandleTypeDef* hfdcan)
 {
+	HAL_FDCAN_Start(hfdcan);
+
 	FDCAN_FilterTypeDef sFilterConfig;
 
-	// Configure reception filter to accept all messages
-	sFilterConfig.IdType = FDCAN_STANDARD_ID;
+	sFilterConfig.IdType = FDCAN_EXTENDED_ID;
 	sFilterConfig.FilterIndex = 0;
-	sFilterConfig.FilterType = FDCAN_FILTER_MASK;
+	sFilterConfig.FilterType = FDCAN_FILTER_RANGE;
 	sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
 	sFilterConfig.FilterID1 = 0x000;
-	sFilterConfig.FilterID2 = 0x000; // Mask, 0x000 means accept all
+	sFilterConfig.FilterID2 = 0x1FFFFFFF;
 
-	if(HAL_FDCAN_ConfigFilter(hfdcan1, &sFilterConfig) != HAL_OK)
+	if(HAL_FDCAN_ConfigFilter(hfdcan, &sFilterConfig) != HAL_OK)
 	{
-		return HAL_ERROR;
+		/* Filter configuration Error */
+		Error_Handler();
 	}
 
-	// Configure global filter to accept all messages
-	if(HAL_FDCAN_ConfigGlobalFilter(
-		   hfdcan1, FDCAN_REJECT, FDCAN_REJECT, FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE) != HAL_OK)
+	if(HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
 	{
-		return HAL_ERROR;
+		Error_Handler();
 	}
-
-	// Activate Rx FIFO 0 new message notification
-	if(HAL_FDCAN_ActivateNotification(hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
-	{
-		return HAL_ERROR;
-	}
-
-	// Start FDCAN controller
-	if(HAL_FDCAN_Start(hfdcan1) != HAL_OK)
-	{
-		return HAL_ERROR;
-	}
-
-	return HAL_OK;
 }
 
 /**
@@ -74,13 +61,15 @@ bool checkPCAN(FDCAN_HandleTypeDef* hfdcan, CAN_RxMessage* msg)
 	return false; // No message available
 }
 
-void sendPCAN(struct Application* app_p)
+void sendPCANMessage(FDCAN_HandleTypeDef* hfdcan, struct Application* app_p)
 {
+	(void)app_p;
+
 	FDCAN_TxHeaderTypeDef TxHeader;
 	uint8_t TxData[8];
 
-	// Configure transmission header
-	TxHeader.Identifier = 0x123;
+	// Configure TX Header for FDCAN1
+	TxHeader.Identifier = 0x11;
 	TxHeader.IdType = FDCAN_STANDARD_ID;
 	TxHeader.TxFrameType = FDCAN_DATA_FRAME;
 	TxHeader.DataLength = FDCAN_DLC_BYTES_8;
@@ -90,19 +79,37 @@ void sendPCAN(struct Application* app_p)
 	TxHeader.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 	TxHeader.MessageMarker = 0;
 
-	// Prepare data to transmit
-	TxData[0] = 0x11;
-	TxData[1] = 0x22;
-	TxData[2] = 0x33;
-	TxData[3] = 0x44;
-	TxData[4] = 0x55;
-	TxData[5] = 0x66;
-	TxData[6] = 0x77;
-	TxData[7] = 0x88;
+	TxData[0] = 50;
+	TxData[1] = 0xAA;
 
-	// Send message
-	if(HAL_FDCAN_AddMessageToTxFifoQ(app_p->hfdcan1, &TxHeader, TxData) != HAL_OK)
+	if(HAL_FDCAN_AddMessageToTxFifoQ(hfdcan, &TxHeader, TxData) != HAL_OK)
 	{
 		Error_Handler();
+	}
+}
+
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef* hfdcan, uint32_t RxFifo0ITs)
+{
+	FDCAN_RxHeaderTypeDef RxHeader;
+	uint8_t RxData[8];
+
+	if((RxFifo0ITs & FDCAN_IT_RX_FIFO0_NEW_MESSAGE) != RESET)
+	{
+		/* Retrieve Rx messages from RX FIFO0 */
+		if(HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK)
+		{
+			Error_Handler();
+		}
+
+		LOG_DBG("CAN Rx: %08lx", RxHeader.Identifier);
+		LOG_DBG("%02x %02x %02x %02x %02x %02x %02x %02x",
+				RxData[0],
+				RxData[1],
+				RxData[2],
+				RxData[3],
+				RxData[4],
+				RxData[5],
+				RxData[6],
+				RxData[7]);
 	}
 }

@@ -24,4 +24,6 @@
  */
 void LED_Heartbeat(bool);
 
+void LED_AuxLow(uint16_t);
+
 #endif /* __BOLT_HEARTBEAT_H */

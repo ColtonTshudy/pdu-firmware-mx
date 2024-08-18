@@ -13,9 +13,9 @@ typedef struct
 } CAN_RxMessage;
 
 //!< Set up FDCAN1 to recieve PCAN messages
-HAL_StatusTypeDef PCAN_Config_Reception(FDCAN_HandleTypeDef*);
+void startPCAN(FDCAN_HandleTypeDef*);
 
 //!< Check PCAN for RX messages
 bool checkPCAN(FDCAN_HandleTypeDef*, CAN_RxMessage*);
 
-void sendPCAN(struct Application*);
+void sendPCANMessage(FDCAN_HandleTypeDef*, struct Application*);

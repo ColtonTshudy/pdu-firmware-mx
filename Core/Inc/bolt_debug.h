@@ -9,6 +9,8 @@
  * 
  */
 
+#include <stdio.h>
+
 // Comment this out to disable printing of debug messages to LPUART1
 #define DEBUG_MODE
 

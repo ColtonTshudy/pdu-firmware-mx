@@ -59,7 +59,11 @@ struct Application
 
 /* Functions */
 //!< Constructs an Application struct
-struct Application applicationSetup();
+struct Application applicationSetup(ADC_HandleTypeDef*,
+									FDCAN_HandleTypeDef*,
+									FDCAN_HandleTypeDef*,
+									TIM_HandleTypeDef*,
+									TIM_HandleTypeDef*);
 //!< Executes in main loop
 void applicationLoop(struct Application*);
 //!< Main state machine

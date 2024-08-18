@@ -10,7 +10,10 @@
         "stm32g4xx_hal.h": "c",
         "stm32g4xx_hal_adc.h": "c",
         "bolt_communications.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "bolt_config.h": "c",
+        "bolt_application.h": "c",
+        "bolt_debug.h": "c"
     },
     "editor.tokenColorCustomizations": {
         "comments": "#6b6b6b"

@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "bolt_application.h"
-#include "debug.h"
+#include "bolt_debug.h"
 #include <assert.h>
 #include <stdio.h>
 
@@ -126,12 +126,7 @@ int main(void)
 	HAL_Delay(1000);
 	LOG_DBG("Hello, World!");
 
-	app = applicationSetup();
-	app.hadc1 = &hadc1;
-	app.hfdcan1 = &hfdcan1;
-	app.hfdcan2 = &hfdcan2;
-	app.htim1 = &htim1;
-	app.htim3 = &htim3;
+	app = applicationSetup(&hadc1, &hfdcan1, &hfdcan2, &htim1, &htim3);
 
 	/* USER CODE END 2 */
 
@@ -516,7 +511,7 @@ static void MX_TIM3_Init(void)
 		Error_Handler();
 	}
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 0;
+	sConfigOC.Pulse = 5099;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
 	if(HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
